@@ -1,0 +1,68 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.gt.SpringBootsDemo</groupId>
+  <artifactId>SpringBootsDemo</artifactId>
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>SpringBootsDemo Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+
+ <!-- pom中parent设为 spring-boot-starter-parent 。建议使用最新的 RELEASE 版本。否则可能需要设置 <repositories/> 和<pluginRepositories/>-->
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.4.2.RELEASE</version>
+  </parent>
+
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <!--mybatis整合springboot的jar-->
+   <dependency>
+      <groupId>org.mybatis.spring.boot</groupId>
+      <artifactId>mybatis-spring-boot-starter</artifactId>
+      <version>1.3.0</version>
+    </dependency>
+
+  <!-- 数据库驱动 oracle -->
+    <dependency>
+      <groupId>ojdbc</groupId>
+      <artifactId>ojdbc</artifactId>
+      <version>6.0</version>
+    </dependency>
+
+    <!--MySQL JDBC驱动-->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!--junit-->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <!-- Package as an executable jar
+  打包。executable jars 又称 fat jars，是可以直接在生产环境中运行的，包含所有编译生成的class文件以及依赖包。
+       注意，Spring Boot的这种打包方式需要使用Spring Boot提供的 spring-boot-maven-plugin 。
+  -->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+    <finalName>SpringBootsDemo</finalName>
+  </build>
+</project>

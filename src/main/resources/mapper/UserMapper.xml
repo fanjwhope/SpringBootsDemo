@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace唯一表示此名字下的crud语句-->
+<mapper namespace="com.gutai.mapper.UserMapper">
+	<!--
+		id:在此命名空间下唯一标识
+		resultType:查询结果的返回类型或者集合的泛型
+	-->
+	<resultMap id="Usertest_rm" type="com.gutai.model.User">
+        <result column="userid" property="id"/>
+        <result column="username" property="name"/>
+    </resultMap>
+    <!--
+		id:在此命名空间下唯一标识
+		resultType:查询结果的返回类型或者集合的泛型
+	 -->
+	<select id="selectAllUser" resultMap="Usertest_rm">
+		select * from usertest
+	</select>
+</mapper>
