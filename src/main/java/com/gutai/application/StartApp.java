@@ -21,6 +21,7 @@ public class StartApp  extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+
         return application.sources(StartApp.class);
     }
     /**
