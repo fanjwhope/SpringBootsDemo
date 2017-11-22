@@ -21,7 +21,7 @@ public class BlogService {
         list.add(new User("刘总",2));
         list.add(new User("响总",3));
         list.add(new User("段总",4));
-       return list;
+        return list;
     }
 
     public List<User> getAllList() throws Exception{

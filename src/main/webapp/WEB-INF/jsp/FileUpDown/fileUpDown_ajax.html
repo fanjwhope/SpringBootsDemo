@@ -1,0 +1,108 @@
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>文件上传下载</title>
+    <script src="bootstrapPage/js/jquery1.12.4.min.js"></script>
+    <script src="FileUpDown/js/jQuery_form.js"></script>
+
+</head>
+<body>
+<form id='myupload' action='http://localhost:80/testUploadFile' method='post' enctype='multipart/form-data'>
+    <div class="demo">
+        <div class="btn">
+            <span>添加附件</span>
+            <input id="fileupload" type="file" name="file1">
+        </div>
+        <!-- 显示已上传的文件名 -->
+        <div class="files" id="files"></div>
+    </div>
+    <input type="submit" onclick="gosubmit2()" value="上传"/>
+
+    <div>
+        <a href="" id="ahref">同步下载文件</a><br />
+
+        <a href="#" onclick="downloadFilebyAjax()">ajax下载文件</a> <br />
+        <a href="#" onclick="downloadFileByForm()">模拟表单提交下载文件</a>
+    </div>
+
+
+</form>
+<script type="text/javascript">
+
+    /**
+     *开始尝试这个api方法来提交后台时，也能上传成功，但是不管返回true或false，页面都跳转了。
+     * 不知道是我的用法不对还是什么原因。时间关系，也没有深究，mark一下，有空再回来试试。
+     */
+  /*  function gosubmit2(){
+        $("#myupload").ajaxSubmit(function (data) {
+            alert(data);
+            return false;
+        });
+    }*/
+
+    /**
+     * 成功上传，且正常返回执行回调函数，且不发生跳转。js如下，其中必须返回false，防止页面表单再次提交（经自测，返回true时，表单确实提交了两次）。
+     */
+    function gosubmit2(){
+        $('#myupload').submit(function() {
+            $(this).ajaxSubmit(function(data) {
+                $('#files').html(data.fileurl);
+                $('#ahref').attr('href', "http://localhost:80/testDownload?fileName="+data.fileurl);
+                alert(data.message);
+            });
+            return false;
+        });
+    }
+
+    /**
+     * 文件下载  ————（不推荐使用）
+     */
+    function downloadFilebyAjax() {
+        var fileURL= $('#files').html();
+        alert(fileURL);
+        $.ajax({
+            type: 'GET',
+            url:'http://localhost:80/testDownload',
+            data:{'fileName':fileURL},
+            success: function (data, status, xhr) {
+                console.log("Download file DONE!");
+                console.log(data); // ajax方式请求的数据只能存放在javascipt内存空间，可以通过javascript访问，但是无法保存到硬盘
+                console.log(status);
+                console.log(xhr);
+                console.log("=====================");
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            },
+            complete: function(XMLHttpRequest, textStatus) {
+                this; // 调用本次AJAX请求时传递的options参数
+            }
+        });
+    }
+
+    /**
+     * 模拟表单进行文件下载
+     */
+    // 模拟表单提交同步方式下载文件
+    // 能够弹出保存文件对话框
+    function downloadFileByForm() {
+        console.log("ajaxDownloadSynchronized");
+        var  url='http://localhost:80/testDownload';
+        var fileName = $('#files').html();
+        var form = $("<form></form>").attr("action", url).attr("method", "get"); //或者post方式
+        var input = document.createElement("input");
+        $(input).attr("type", "hidden");
+        $(input).attr("name", "fileName");
+        $(input).attr("value", fileName);
+        form.append(input);
+        form.appendTo('body').submit().remove();
+    }
+
+
+
+</script>
+</body>
+</html>

@@ -5,6 +5,7 @@ import com.gutai.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -29,10 +30,19 @@ public class sampleControler {
     @Autowired
     BlogService service;
 
-    @RequestMapping("/")
-    @ResponseBody
+     @RequestMapping(value = "/home",method = RequestMethod.GET)
+     //@ResponseBody    --- http://localhost:8081/home/ 才可以请求到页面。否则就是下载页面了。
+     //@GetMapping("/home")
     public String home() {
-        return "spring boots Home!";
+         System.out.println("hello11");
+        return "home";
+    }
+
+    @RequestMapping("/nihao1")
+    @ResponseBody
+    public String  index(){
+
+       return "nihao1";
     }
 
     @RequestMapping("/getAll")
